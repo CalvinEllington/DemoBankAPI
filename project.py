@@ -96,4 +96,4 @@ def tx_page(account_id, tx_id):
 
 
 if __name__ == '__Main__':
-    app.run()
+    app.run(host='54.187.25.192')
