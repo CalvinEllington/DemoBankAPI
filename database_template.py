@@ -14,6 +14,12 @@ sqlalchemy_utils.create_database('postgresql:///bankapi.db')
 Base = declarative_base()
 
 #DB Models.
+class UserWallet(Base):
+    __tablename__ = 'wallet'
+
+    uid = Column(Integer, primary_key=True, autoincrement=True)
+    funds = Column(Integer, nullable=True)
+
 class Account(Base):
     __tablename__ = 'accounts'
 

@@ -19,15 +19,24 @@ session = dbsession()
 @app.route('/')
 @app.route('/accounts')
 def accounts_all():
-    accounts = session.query(Account).all()
-    if accounts:
-        x = 'Your accounts are listed below:' +'\n'
-        y = '\n'.join(str(a.aid) for a in accounts)
-        z = '\n''To create a new account, make a POST request to /accounts/new_ac'
-        zz = '\n' + 'arguments for [name] are required.' + '\n'
-        return x + y + z + zz
+    if session.query(UserWallet).all():
+        accounts = session.query(Account).all()
+        if accounts:
+            x = 'Your accounts are listed below:' +'\n'
+            y = '\n'.join(str(a.aid) for a in accounts)
+            z = '\n''To create a new account, make a POST request to /accounts/new_ac'
+            zz = '\n' + 'arguments for [name] are required.' + '\n'
+            return x + y + z + zz
+        else:
+            return 'There are no accounts, curl to make some' + '\n'
     else:
-        return 'There are no accounts, curl to make some' + '\n'
+        newUser = UserWallet(funds=1000000)
+        session.add(newUser)
+        session.commit()
+        return 'Welcome, your initial personal wallet balance is 1000000sat.' + \
+        '\n' + 'Follow the curl guide included in the respository to manage' + \
+        '\n' + 'your accounts. Have fun and rest assured, funds are safe.'
+
 
 #Create New Account.
 @app.route('/accounts/new_ac', methods=['GET','POST'])
