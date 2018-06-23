@@ -1,0 +1,5 @@
+
+curl -X POST -H "Content-Type: application/json" -d '{"name": "Main Account"}'  http://127.0.0.1:5000/accounts/new_ac
+curl -X POST -H "Content-Type: application/json" -d '{"amount": 10000}'  http://127.0.0.1:5000/accounts/2/tx/new
+curl http://127.0.0.1:5000/accounts/2/JSON
+BasicBankingAPI-512MB-Oregon-1
