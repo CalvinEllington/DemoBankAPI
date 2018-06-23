@@ -6,8 +6,10 @@ import string
 import httplib2
 import json
 
+#Initiate Flask Server
 app = flask.Flask(__name__)
 
+#Initiate DB Engine.
 engine = sqlalchemy.create_engine('postgresql:///bankapi.db')
 Base.metadata.bind = engine
 dbsession = sqlalchemy.orm.sessionmaker(bind=engine)
@@ -66,6 +68,7 @@ def tx_new(account_id):
     else:
         return 'Transactions can only be created via POST requests.' + '\n'
 
+#API Serialized Data Endpoints.
 @app.route('/accounts/<int:account_id>/JSON')
 def account_page(account_id):
     try:
@@ -92,7 +95,6 @@ def tx_page(account_id, tx_id):
     except:
         return 'One of the specified IDs is not valid.'
     return flask.jsonify(Transaction=tx.serialize)
-
 
 
 if __name__ == '__Main__':

@@ -4,6 +4,12 @@ from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
+import sqlalchemy_utils
+
+#Drop DB if it exists.
+if sqlalchemy_utils.database_exists('postgresql:///bankapi.db'):
+    sqlalchemy_utils.drop_database('postgresql:///bankapi.db')
+sqlalchemy_utils.create_database('postgresql:///bankapi.db')
 
 Base = declarative_base()
 
