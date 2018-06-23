@@ -5,6 +5,7 @@ import random
 import string
 import httplib2
 import json
+import sqlalchemy_utils
 
 #Initiate Flask Server
 app = flask.Flask(__name__)
@@ -14,6 +15,12 @@ engine = sqlalchemy.create_engine('postgresql:///bankapi.db')
 Base.metadata.bind = engine
 dbsession = sqlalchemy.orm.sessionmaker(bind=engine)
 session = dbsession()
+
+#API reset.
+@app.route('/reset')
+def api_reset():
+    database_template.autoDB()
+    return 'Database Reset, return to / or /accounts'
 
 #Root / Show all accounts.
 @app.route('/')
@@ -65,6 +72,13 @@ def tx_new(account_id):
         data = flask.request.get_json()
         if data['amount']:
             tx_amount = data['amount']
+            check_bal = active_ac.hodlings + tx_amount
+            userwal = session.query(UserWallet).one().funds
+            check_wal = userwal - tx_amount
+            if check_bal < 0:
+                return 'Not enough hodlings for specified withdrawal.'
+            elif check_wal < 0:
+                return 'Not enough funds for specified deposit.'
             new_tx = Transaction(aid=account_id, amount=tx_amount)
             session.add(new_tx)
             active_ac.hodlings += tx_amount
