@@ -4,23 +4,25 @@ This app requires curl. To use this app, visit the following url. You will be pr
 Below are some templates for the curl commands, depending on your system they might be different.
 
 //Initial User Creation  <br>
-curl http://127.0.0.1:5000/  <br>
+curl http://7fa18a5e.ngrok.io/ <br>
 
-//Add an account
-curl -X POST -H "Content-Type: application/json" -d '{"name": "Main Account"}'  http://127.0.0.1:5000/accounts/new_ac
+//Add an account  <br>
+curl -X POST -H "Content-Type: application/json" -d '{"name": "Main Account"}'  http://7fa18a5e.ngrok.io/accounts/new_ac  <br>
 
-//Add a transaction. Replace accountid with the account desired. Negatives represent withdrawals.
-curl -X POST -H "Content-Type: application/json" -d '{"amount": 10000}'  http://127.0.0.1:5000/accounts/accountid/tx/new
+//Add a transaction. Replace accountid with the account desired. Negatives represent withdrawals.   <br>
+curl -X POST -H "Content-Type: application/json" -d '{"amount": 10000}'  http://7fa18a5e.ngrok.io/accounts/accountid/tx/new  <br>
+curl -X POST -H "Content-Type: application/json" -d '{"amount": -789}'  http://7fa18a5e.ngrok.io/accounts/accountid/tx/new  <br>
 
-//JSON Endpoints. Replace txid and accountid with the desired accounts/transactions
-Account
-curl http://127.0.0.1:5000/accounts/accountid/JSON
-
-All transactions for a specific account
-curl http://127.0.0.1:5000/accounts/accountid/tx/JSON
-
-Specific transaction information
-curl http://127.0.0.1:5000/accounts/accountid/tx/txid/JSON
-
+//JSON Endpoints. Replace txid and accountid with the desired accounts/transactions <br>
+Account <br>
+curl http://7fa18a5e.ngrok.io/accounts/accountid/JSON <br>
+ <br>
+All transactions for a specific account <br>
+curl http://7fa18a5e.ngrok.io/accounts/accountid/tx/JSON <br>
+ <br>
+Specific transaction information <br>
+curl http://7fa18a5e.ngrok.io/accounts/accountid/tx/txid/JSON <br>
+ <br>
 //Reset application
-curl http://127.0.0.1:5000/reset
+curl http://7fa18a5e.ngrok.io/reset
+
