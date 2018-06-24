@@ -3,8 +3,8 @@
 This app requires curl. To use this app, visit the following url. You will be prompted to make some accounts.
 Below are some templates for the curl commands, depending on your system they might be different.
 
-//Initial User Creation
-curl http://127.0.0.1:5000/
+//Initial User Creation  <br>
+curl http://127.0.0.1:5000/  <br>
 
 //Add an account
 curl -X POST -H "Content-Type: application/json" -d '{"name": "Main Account"}'  http://127.0.0.1:5000/accounts/new_ac
