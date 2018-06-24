@@ -7,12 +7,9 @@ from sqlalchemy import create_engine
 import sqlalchemy_utils
 
 #Drop DB if it exists.
-def autoDB():
-    if sqlalchemy_utils.database_exists('postgresql:///bankapi.db'):
-        sqlalchemy_utils.drop_database('postgresql:///bankapi.db')
-    sqlalchemy_utils.create_database('postgresql:///bankapi.db')
-
-autoDB()
+if sqlalchemy_utils.database_exists('postgresql:///bankapi.db'):
+    sqlalchemy_utils.drop_database('postgresql:///bankapi.db')
+sqlalchemy_utils.create_database('postgresql:///bankapi.db')
 
 Base = declarative_base()
 
@@ -22,6 +19,13 @@ class UserWallet(Base):
 
     uid = Column(Integer, primary_key=True, autoincrement=True)
     funds = Column(Integer, nullable=True)
+
+    @property
+    def serialize(self):
+        return {
+            'uid' : uid,
+            'funds' : funds,
+        }
 
 class Account(Base):
     __tablename__ = 'accounts'

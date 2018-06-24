@@ -1,4 +1,4 @@
-from database_template import Base, Account, Transaction
+from database_template import Base, Account, Transaction, UserWallet
 import sqlalchemy
 import flask
 import random
@@ -19,21 +19,26 @@ session = dbsession()
 #API reset.
 @app.route('/reset')
 def api_reset():
-    database_template.autoDB()
-    return 'Database Reset, return to / or /accounts'
+    meta = Base.metadata
+    for table in reversed(meta.sorted_tables):
+        session.execute(table.delete())
+    session.commit()
+    return 'Database Reset, return to / or /accounts' + '\n'
 
 #Root / Show all accounts.
 @app.route('/')
 @app.route('/accounts')
 def accounts_all():
-    if session.query(UserWallet).all():
+    user = session.query(UserWallet).all()
+    if user:
         accounts = session.query(Account).all()
         if accounts:
+            u = 'Current Wallet: ' + str(user[0].funds) + '\n'
             x = 'Your accounts are listed below:' +'\n'
             y = '\n'.join(str(a.aid) for a in accounts)
             z = '\n''To create a new account, make a POST request to /accounts/new_ac'
             zz = '\n' + 'arguments for [name] are required.' + '\n'
-            return x + y + z + zz
+            return u + x + y + z + zz
         else:
             return 'There are no accounts, curl to make some' + '\n'
     else:
@@ -42,7 +47,7 @@ def accounts_all():
         session.commit()
         return 'Welcome, your initial personal wallet balance is 1000000sat.' + \
         '\n' + 'Follow the curl guide included in the respository to manage' + \
-        '\n' + 'your accounts. Have fun and rest assured, funds are safe.'
+        '\n' + 'your accounts. Have fun and rest assured, funds are safe.' + '\n'
 
 
 #Create New Account.
@@ -73,15 +78,16 @@ def tx_new(account_id):
         if data['amount']:
             tx_amount = data['amount']
             check_bal = active_ac.hodlings + tx_amount
-            userwal = session.query(UserWallet).one().funds
-            check_wal = userwal - tx_amount
+            userwal = session.query(UserWallet).one()
+            check_wal = userwal.funds - tx_amount
             if check_bal < 0:
-                return 'Not enough hodlings for specified withdrawal.'
+                return 'Not enough hodlings for specified withdrawal.' + '\n'
             elif check_wal < 0:
-                return 'Not enough funds for specified deposit.'
+                return 'Not enough funds for specified deposit.' + '\n'
             new_tx = Transaction(aid=account_id, amount=tx_amount)
             session.add(new_tx)
             active_ac.hodlings += tx_amount
+            userwal.funds -= tx_amount
             session.commit()
             latest_tx = session.query(Transaction).order_by(Transaction.txid.desc()).first()
             latest_txid = latest_tx.txid
@@ -116,7 +122,7 @@ def tx_page(account_id, tx_id):
     try:
         tx = session.query(Transaction).filter_by(txid=tx_id, aid=account_id).one()
     except:
-        return 'One of the specified IDs is not valid.'
+        return 'One of the specified IDs is not valid.' + '\n'
     return flask.jsonify(Transaction=tx.serialize)
 
 
