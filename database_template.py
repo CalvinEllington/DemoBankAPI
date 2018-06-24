@@ -12,7 +12,7 @@ def autoDB():
         sqlalchemy_utils.drop_database('postgresql:///bankapi.db')
     sqlalchemy_utils.create_database('postgresql:///bankapi.db')
 
-autoDB():
+autoDB()
 
 Base = declarative_base()
 
