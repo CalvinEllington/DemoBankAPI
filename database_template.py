@@ -7,9 +7,12 @@ from sqlalchemy import create_engine
 import sqlalchemy_utils
 
 #Drop DB if it exists.
-if sqlalchemy_utils.database_exists('postgresql:///bankapi.db'):
-    sqlalchemy_utils.drop_database('postgresql:///bankapi.db')
-sqlalchemy_utils.create_database('postgresql:///bankapi.db')
+def autoDB():
+    if sqlalchemy_utils.database_exists('postgresql:///bankapi.db'):
+        sqlalchemy_utils.drop_database('postgresql:///bankapi.db')
+    sqlalchemy_utils.create_database('postgresql:///bankapi.db')
+
+autoDB():
 
 Base = declarative_base()
 
