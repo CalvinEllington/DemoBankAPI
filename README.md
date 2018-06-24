@@ -29,7 +29,8 @@ Specific transaction information <br>
 
 
 
-```curl http://7fa18a5e.ngrok.io/
+```
+curl http://7fa18a5e.ngrok.io/
 curl -X POST -H "Content-Type: application/json" -d '{"name": "Main Account"}'  http://7fa18a5e.ngrok.io/accounts/new_ac
 curl -X POST -H "Content-Type: application/json" -d '{"amount": 10000}'  http://7fa18a5e.ngrok.io/accounts/accountid/tx/new
 curl -X POST -H "Content-Type: application/json" -d '{"amount": -789}'  http://7fa18a5e.ngrok.io/accounts/accountid/tx/new
