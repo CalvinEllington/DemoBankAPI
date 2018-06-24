@@ -28,7 +28,7 @@ Specific transaction information <br>
 <br>
 
 
-
+If you follow along with each command below, you will be exposed to the different functionality of the app. Comments welcome!
 ```
 curl http://7fa18a5e.ngrok.io/
 curl -X POST -H "Content-Type: application/json" -d '{"name": "Main Account"}'  http://7fa18a5e.ngrok.io/accounts/new_ac
