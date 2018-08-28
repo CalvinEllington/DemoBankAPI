@@ -1,7 +1,8 @@
 # DemoBankAPI
+Simple proof of concept for a Banking API.
 
 This app requires curl. To use this app, visit the following url. You will be prompted to make some accounts.
-Below are some templates for the curl commands, depending on your system they might be different.
+Below are some templates for the curl commands, depending on your system they might be different. SERVER IS NOT CURRENTLY RUNNING.
 
 //Initial User Creation  <br>
 `curl http://60d0ba9e.ngrok.io/` <br>
